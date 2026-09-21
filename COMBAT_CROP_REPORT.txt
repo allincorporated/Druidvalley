@@ -1,0 +1,3 @@
+stick_pose_swing.png: general_stick_poses.jpg left panel mid-swing (hit flick)
+stick_pose_overhead.png: general_stick_poses.jpg right panel overhead
+peasant_front.png: general_peasant_4view.jpg leftmost front panel (miss flick)

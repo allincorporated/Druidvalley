@@ -1,0 +1,106 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://scripts/plain_look.gd" id="1_plain"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/virtual_joystick.gd" id="3_joy"]
+
+[sub_resource type="StyleBoxFlat" id="Style_obj"]
+bg_color = Color(0.05, 0.07, 0.12, 0.72)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+
+[node name="PlainLook" type="Node3D"]
+script = ExtResource("1_plain")
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 8)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ObjectiveLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -380.0
+offset_top = 10.0
+offset_right = 380.0
+offset_bottom = 52.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.7, 1)
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("Style_obj")
+text = "Plain look — meadow + day sky only"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HintLabel" type="Label" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 520.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 0.75)
+theme_override_font_sizes/font_size = 14
+text = "Drag left stick to walk · Jump on the right"
+
+[node name="VirtualJoystick" type="Control" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -220.0
+offset_right = 200.0
+offset_bottom = -16.0
+mouse_filter = 0
+script = ExtResource("3_joy")
+
+[node name="Base" type="ColorRect" parent="UI/VirtualJoystick"]
+mouse_filter = 2
+color = Color(0.15, 0.18, 0.25, 0.45)
+
+[node name="Knob" type="ColorRect" parent="UI/VirtualJoystick"]
+mouse_filter = 2
+offset_left = 55.0
+offset_top = 55.0
+offset_right = 105.0
+offset_bottom = 105.0
+color = Color(0.55, 0.35, 0.85, 0.85)
+
+[node name="JumpButton" type="Button" parent="UI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -120.0
+offset_right = -24.0
+offset_bottom = -40.0
+theme_override_font_sizes/font_size = 18
+text = "Jump"
+
+[node name="ActionButton" type="Button" parent="UI"]
+visible = false
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -150.0
+offset_top = -210.0
+offset_right = -24.0
+offset_bottom = -130.0
+theme_override_font_sizes/font_size = 16
+text = "Action"

@@ -1,0 +1,155 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/coast.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/player.tscn" id="2_player"]
+[ext_resource type="Script" path="res://scripts/virtual_joystick.gd" id="3_joy"]
+
+[sub_resource type="StyleBoxFlat" id="Style_toast"]
+bg_color = Color(0.06, 0.08, 0.12, 0.82)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Style_obj"]
+bg_color = Color(0.05, 0.07, 0.12, 0.72)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="Style_action"]
+bg_color = Color(0.22, 0.45, 0.28, 0.95)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+content_margin_left = 18.0
+content_margin_top = 14.0
+content_margin_right = 18.0
+content_margin_bottom = 14.0
+
+[node name="Coast" type="Node3D"]
+script = ExtResource("1_script")
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource("2_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 8)
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="ObjectiveLabel" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -340.0
+offset_top = 10.0
+offset_right = 340.0
+offset_bottom = 52.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.95, 0.9, 0.7, 1)
+theme_override_font_sizes/font_size = 18
+theme_override_styles/normal = SubResource("Style_obj")
+text = "Coast — shore path toward the hostel beach"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="HintLabel" type="Label" parent="UI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -48.0
+offset_right = 560.0
+offset_bottom = -12.0
+theme_override_colors/font_color = Color(0.9, 0.9, 0.95, 0.75)
+theme_override_font_sizes/font_size = 14
+text = "WASD / stick · Jump · Action when near a door"
+
+[node name="Toast" type="Label" parent="UI"]
+visible = false
+z_index = 20
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 160.0
+offset_right = 300.0
+offset_bottom = 210.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.92, 0.88, 1, 1)
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("Style_toast")
+text = "…"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="VirtualJoystick" type="Control" parent="UI"]
+z_index = 5
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 0.0
+mouse_filter = 0
+script = ExtResource("3_joy")
+
+[node name="Base" type="ColorRect" parent="UI/VirtualJoystick"]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(1, 1, 1, 0.18)
+
+[node name="Knob" type="ColorRect" parent="UI/VirtualJoystick"]
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+color = Color(0.75, 0.55, 1, 0.55)
+
+[node name="ActionButton" type="Button" parent="UI"]
+visible = false
+z_index = 40
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -168.0
+offset_right = 140.0
+offset_bottom = -88.0
+focus_mode = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("Style_action")
+text = "Enter"
+
+[node name="JumpButton" type="Button" parent="UI"]
+z_index = 40
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -132.0
+offset_top = -96.0
+offset_right = -24.0
+offset_bottom = -28.0
+focus_mode = 0
+mouse_filter = 0
+theme_override_font_sizes/font_size = 20
+text = "Jump"

@@ -1,0 +1,355 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://scripts/chess_board.gd" id="1_chess"]
+[ext_resource type="Texture2D" path="res://assets/art/chess/board_concept.jpg" id="2_concept"]
+
+[sub_resource type="StyleBoxFlat" id="Style_panel"]
+bg_color = Color(0.12, 0.10, 0.16, 0.94)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+content_margin_left = 12.0
+content_margin_top = 10.0
+content_margin_right = 12.0
+content_margin_bottom = 10.0
+
+[sub_resource type="StyleBoxFlat" id="Style_toast"]
+bg_color = Color(0.12, 0.08, 0.18, 0.94)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+
+[sub_resource type="StyleBoxFlat" id="Style_frame"]
+bg_color = Color(0.32, 0.20, 0.10, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.55, 0.38, 0.18, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="ChessBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_chess")
+
+[node name="SolidBG" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.14, 0.11, 0.16, 1)
+
+[node name="ConceptBG" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_concept")
+expand_mode = 1
+stretch_mode = 6
+modulate = Color(0.70, 0.62, 0.78, 0.22)
+
+[node name="TopBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 12.0
+offset_top = 6.0
+offset_right = -12.0
+offset_bottom = 88.0
+grow_horizontal = 2
+
+[node name="Objective" type="Label" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_right = -130.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0.98, 0.86, 0.45, 1)
+theme_override_font_sizes/font_size = 17
+text = "You are the General — command the field"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 28.0
+offset_right = -130.0
+offset_bottom = 72.0
+theme_override_colors/font_color = Color(0.92, 0.90, 0.96, 1)
+theme_override_font_sizes/font_size = 14
+text = "Place: tap unit type, then empty square on YOUR half (bottom)"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BackBtn" type="Button" parent="TopBar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -124.0
+offset_top = 6.0
+offset_right = -4.0
+offset_bottom = 48.0
+theme_override_font_sizes/font_size = 15
+text = "Back to yard"
+
+[node name="BoardFrame" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 90.0
+offset_right = -242.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("Style_frame")
+
+[node name="BoardHost" type="Control" parent="BoardFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SidePanel" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -236.0
+offset_top = 90.0
+offset_right = -8.0
+offset_bottom = -10.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="PanelBG" type="Panel" parent="SidePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("Style_panel")
+
+[node name="PlacePanel" type="VBoxContainer" parent="SidePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 8
+
+[node name="PlaceTitle" type="Label" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.88, 0.55, 1)
+theme_override_font_sizes/font_size = 15
+text = "Deploy units"
+horizontal_alignment = 1
+
+[node name="PoolLabel" type="Label" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Pools — Inf 7 · Arch 4 · Cav 2 · Champ 1"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlaceHow" type="Label" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.82, 0.80, 0.90, 0.95)
+theme_override_font_sizes/font_size = 11
+text = "Pre-set on board. Deploy extras: Inf line×3 · Arch L×3 · Cav T×4 · Champion on row 2. Then Begin."
+autowrap_mode = 3
+
+[node name="BtnInf" type="Button" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+text = "Infantry line×3 (pool)"
+
+[node name="BtnArch" type="Button" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+text = "Archer L×3"
+
+[node name="BtnCav" type="Button" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 42)
+text = "Cavalry T×4"
+
+[node name="BtnCancel" type="Button" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+text = "Cancel placement"
+
+[node name="BtnStartFromPlace" type="Button" parent="SidePanel/PlacePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Begin manoeuvres"
+
+[node name="ChoicePanel" type="VBoxContainer" parent="SidePanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 10
+
+[node name="ChoiceTitle" type="Label" parent="SidePanel/ChoicePanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.88, 0.55, 1)
+text = "3 deployments done"
+horizontal_alignment = 1
+
+[node name="BtnKeep" type="Button" parent="SidePanel/ChoicePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Keep deploying"
+
+[node name="BtnStart" type="Button" parent="SidePanel/ChoicePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "Begin manoeuvres"
+
+[node name="MovePanel" type="VBoxContainer" parent="SidePanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = -10.0
+offset_bottom = -10.0
+theme_override_constants/separation = 8
+
+[node name="MovesLabel" type="Label" parent="SidePanel/MovePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Each unit acts once"
+horizontal_alignment = 1
+
+[node name="MoveHint" type="Label" parent="SidePanel/MovePanel"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 11
+theme_override_colors/font_color = Color(0.85, 0.82, 0.92, 0.95)
+text = "Each unit/regiment acts once per turn. After move: auto-fight if adjacent. Cav: free once/turn (multi-step); Cancel ends early. Archer red = volley (uses your act). Oak = full turn. Druid powers are real."
+autowrap_mode = 3
+
+[node name="BtnCancelCav" type="Button" parent="SidePanel/MovePanel"]
+visible = false
+layout_mode = 2
+custom_minimum_size = Vector2(0, 40)
+text = "Cancel cavalry"
+
+[node name="BtnEndTurn" type="Button" parent="SidePanel/MovePanel"]
+layout_mode = 2
+custom_minimum_size = Vector2(0, 44)
+text = "End turn"
+
+[node name="DruidPanel" type="VBoxContainer" parent="SidePanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -210.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_vertical = 0
+theme_override_constants/separation = 6
+
+[node name="DruidTitle" type="Label" parent="SidePanel/DruidPanel"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.92, 0.62, 1)
+text = "Druid abilities"
+horizontal_alignment = 1
+
+[node name="BtnEarth" type="Button" parent="SidePanel/DruidPanel"]
+layout_mode = 2
+text = "Earth (trap 3t)"
+
+[node name="BtnWater" type="Button" parent="SidePanel/DruidPanel"]
+layout_mode = 2
+text = "Water (shove)"
+
+[node name="BtnFire" type="Button" parent="SidePanel/DruidPanel"]
+layout_mode = 2
+text = "Fire (dmg 2)"
+
+[node name="BtnHoly" type="Button" parent="SidePanel/DruidPanel"]
+layout_mode = 2
+text = "Holy (heal only)"
+
+[node name="Legend" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = -78.0
+offset_right = 620.0
+offset_bottom = -8.0
+theme_override_colors/font_color = Color(0.90, 0.86, 0.96, 0.92)
+theme_override_font_sizes/font_size = 12
+text = "Tokens: gold G=YOU · purple Q · green D · blue I · teal A · orange C · grey tower · red = enemy — HP 3 each
+Regiments: Inf=line of 3 · Arch=fixed L of 3 · Cav=T of 4 (1) · Move→auto chip · End turn → enemy acts"
+autowrap_mode = 3
+
+[node name="Toast" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 92.0
+offset_right = 300.0
+offset_bottom = 136.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.98, 0.94, 1, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("Style_toast")
+text = "Toast"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3

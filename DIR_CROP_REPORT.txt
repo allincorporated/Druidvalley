@@ -1,0 +1,4 @@
+dir_front.png: king_turnaround_white.jpg fig0 leftmost front (bbox ~10,11–477,958)
+dir_left.png: king_turnaround_white.jpg fig1 profile (bbox ~489,16–764,961)
+dir_right.png: king_turnaround_white.jpg profB (bbox ~1047,17–1307,961)
+dir_back.png: king_4x4_black.jpg row3 col1 back view

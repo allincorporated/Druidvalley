@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_player"]
+[ext_resource type="Texture2D" path="res://assets/art/character/dir_front.png" id="2_dir"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape"]
+radius = 0.35
+height = 1.6
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 1
+floor_stop_on_slope = true
+floor_max_angle = 0.9
+floor_snap_length = 0.4
+script = ExtResource("1_player")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+shape = SubResource("CapsuleShape")
+
+[node name="Mesh" type="Node3D" parent="."]
+
+[node name="GeneralSprite" type="Sprite3D" parent="Mesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55, 0)
+pixel_size = 0.004
+billboard = 2
+shaded = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.12
+texture_filter = 0
+double_sided = true
+texture = ExtResource("2_dir")
+
+[node name="CameraPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CameraPivot"]
+spring_length = 7.25
+margin = 0.2
+collision_mask = 1
+
+[node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
+current = true
+fov = 58.0
+far = 400.0
